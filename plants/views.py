@@ -1,32 +1,24 @@
 from django.shortcuts import render
-
 # Create your views here.
 from django.http import HttpResponse
+from .models import Plant
 
-class Plant:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, name, care_level, description, age):
-    self.name = name
-    self.care_level = care_level
-    self.description = description
-    self.age = age
 
-plants = [
-  Plant('Snake Plant', 'Basic', 'Bush', 2),
-  Plant('Spider Plant', 'Basic', 'Bush',0),
-  Plant('Pothos', 'Medium', 'Vine', 4),
-  Plant('Aloe Vera', 'Basic', 'Bush', 3),
-  Plant('Broad Leaf Oregano', 'Medium', 'Vine', 4),
-  Plant('English Ivy', 'Medium', 'Vine', 3),
-  Plant('Broad leaf Lemon Thyme', 'Basic', 'Bush', 3),
-]
-
+num = 5
 
 def home(request):
     return HttpResponse("Hello, You're at the plants home.")
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'about.html',{'num': num})
 
 def plants_index(request):
+    plants=Plant.objects.all()
     return render(request, 'plants/index.html', {'plants':plants})
+
+def plants_detail(request, plant_id):
+    plant = Plant.objects.get(id=plant_id)
+    return render(request, 'plants/detail.html', {'plant':plant})
+
+
 

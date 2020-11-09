@@ -4,15 +4,18 @@
 
 {% for plant in plants %}
 <div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ plant.name }}</span>
-    <p>Care Level: {{ plant.care_level }}</p>
-    <p>Description: {{ plant.description }}</p>
-    {% if plant.age > 0 %}
-    <p>Age: {{ plant.age }}</p>
-    {% else %}
-    <p>Age: Baby Plant</p>
-    {% endif %}
-  </div>
+  <!-- <a href="/plants/{{plant.id}}"> -->
+  <a href="{% url 'detail' plant.id %}">
+    <div class="card-content">
+      <span class="card-title">{{ plant.name }}</span>
+      <p>Care Level: {{ plant.care_level }}</p>
+      <p>Description: {{ plant.description }}</p>
+      {% if plant.age > 0 %}
+      <p>Age: {{ plant.age }}</p>
+      {% else %}
+      <p>Age: Baby Plant</p>
+      {% endif %}
+    </div>
+  </a>
 </div>
 {% endfor %} {% endblock %}
