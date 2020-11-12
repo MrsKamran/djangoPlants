@@ -56,8 +56,8 @@
       <div class="card-content">
         <span class="card-title">
           A
-          <span style="color: {{ accessory.color }}"
-            >{{ accessory.color }}</span
+          <span style="color: {{ accessory.color }}">
+            {{ accessory.color }}</span
           >
           {{ accessory.name }}
         </span>
@@ -67,20 +67,23 @@
     <h5>No accessories :(</h5>
     {% endif %}
   </div>
-  <!-- Available toys will come after this line -->
+  <!-- Available accessories will come after this line -->
   <div class="col s6">
     <h3>Available Accessories</h3>
     {% if accessories.count %} {% for accessory in accessories.all %}
     <div class="card">
       <div class="card-content">
         <span class="card-title"
-          >A<span style="color: {{ accessory.color }}"
-            >{{ accessory.color }}</span
-          >{{ accessory.name }}</span
+          >A<span style="color:{{ accessory.color }}">
+            {{accessory.color }}</span
+          >{{accessory.name }}</span
         >
       </div>
       <div class="card-action">
-        <form action="" method="post">
+        <form
+          action="{% url 'assoc_accessory' plant.id accessory.id %}"
+          method="post"
+        >
           {% csrf_token %}
           <button type="submit" class="btn">Add</button>
         </form>

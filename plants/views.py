@@ -36,7 +36,7 @@ def plants_detail(request, plant_id):
     plant = Plant.objects.get(id=plant_id)
     accessories_plant_doesnt_have = Accessory.objects.exclude(id__in = plant.accessories.all().values_list('id'))
     watering_form = WateringForm()
-    return render(request, 'plants/detail.html', {'plant':plant, 'watering_form':watering_form})
+    return render(request, 'plants/detail.html', {'plant':plant, 'watering_form':watering_form, 'accessories':accessories_plant_doesnt_have})
 
 def add_watering(request, plant_id):
     form = WateringForm(request.POST)
@@ -46,10 +46,10 @@ def add_watering(request, plant_id):
         new_watering.save()
     return redirect('detail', plant_id=plant_id)
 
-def assoc_accessory(request, cat_id, toy_id):
+def assoc_accessory(request, plant_id, accessory_id):
   # Note that you can pass a toy's id instead of the whole object
-  Cat.objects.get(id=cat_id).toys.add(toy_id)
-  return redirect('detail', cat_id=cat_id)
+  Plant.objects.get(id=plant_id).accessories.add(accessory_id)
+  return redirect('detail', plant_id=plant_id)
 
 class AccessoryList(ListView):
   model = Accessory
