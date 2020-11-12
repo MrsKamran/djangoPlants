@@ -31,6 +31,7 @@
         <tr>
           <th>Date</th>
           <th>Fertilizer</th>
+          <th>Water</th>
         </tr>
       </thead>
       <tbody>
@@ -38,12 +39,59 @@
         <tr>
           <td>{{watering.date}}</td>
           <td>{{watering.get_fertilizer_display}}</td>
+          <td>{{watering.get_water_display}}</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
+
+<hr />
+<div class="row">
+  <div class="col s6">
+    <h3>{{ plant.name }}'s Accessories</h3>
+    {% if plant.accessories.count %} {% for accessory in plant.accessories.all%}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          A
+          <span style="color: {{ accessory.color }}"
+            >{{ accessory.color }}</span
+          >
+          {{ accessory.name }}
+        </span>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <h5>No accessories :(</h5>
+    {% endif %}
+  </div>
+  <!-- Available toys will come after this line -->
+  <div class="col s6">
+    <h3>Available Accessories</h3>
+    {% if accessories.count %} {% for accessory in accessories.all %}
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"
+          >A<span style="color: {{ accessory.color }}"
+            >{{ accessory.color }}</span
+          >{{ accessory.name }}</span
+        >
+      </div>
+      <div class="card-action">
+        <form action="" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn">Add</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <h5>{{plant.name}} Already Has All Accessories Available</h5>
+    {% endif %}
+  </div>
+</div>
+
 <script>
   var dateEl = document.getElementById("id_date");
   M.Datepicker.init(dateEl, {
@@ -54,5 +102,7 @@
   });
   var selectEl = document.getElementById("id_fertilizer");
   M.FormSelect.init(selectEl);
+  var selectEl2 = document.getElementById("id_water");
+  M.FormSelect.init(selectEl2);
 </script>
 {% endblock %}
